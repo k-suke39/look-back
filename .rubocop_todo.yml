@@ -7,6 +7,10 @@ Metrics/MethodLength:
 Metrics/PerceivedComplexity:
   Max: 9
 
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+
 Style/Documentation:
   Exclude:
     - 'spec/**/*'
