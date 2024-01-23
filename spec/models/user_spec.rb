@@ -10,13 +10,21 @@ describe User do
 
   describe '.first' do
     before do
-      create(:user, nickname:, email:)
+      @user = create(:user, nickname:, email:)
+      @post = create(:scrap, title: 'タイトル', content: '本文', user_id: @user.id)
     end
 
     subject { described_class.first }
+
     it '作成したUserを返す' do
       expect(subject.nickname).to eq(nickname)
       expect(subject.email).to eq(email)
+    end
+
+    it '紐づくPostの情報を取得できる' do
+      expect(subject.scraps.first.title).to eq('タイトル')
+      expect(subject.scraps.first.content).to eq('本文')
+      expect(subject.scraps.first.user_id).to eq(@user.id)
     end
   end
 
