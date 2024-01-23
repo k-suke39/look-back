@@ -37,6 +37,15 @@ class ScrapsController < ApplicationController
     end
   end
 
+  def destroy
+    scrap = Scrap.find_by(id: params[:id])
+    if (scrap.user = current_user)
+      scrap.destroy
+      flash[:notice] = '記録が削除されました'
+    end
+    redirect_to scraps_path
+  end
+
   private
 
   def set_scrap
