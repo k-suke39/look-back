@@ -60,7 +60,7 @@ describe User do
 
   describe '#owns?' do
     let(:user) { create(:user) }
-    let(:scrap) { create(:scrap, user: user) }
+    let(:scrap) { create(:scrap, user:) }
     let(:other_user) { create(:user) }
     context 'ユーザのScrapである場合' do
       it 'trueを返す' do

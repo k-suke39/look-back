@@ -100,7 +100,7 @@ describe 'Scrap', type: :system do
         it '編集するボタンが表示されない' do
           sign_in other_user
           visit '/scraps'
-          expect(page).not_to have_content("編集する")
+          expect(page).not_to have_content('編集する')
         end
       end
     end
