@@ -6,5 +6,5 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root 'home#top'
-  resources :scraps, only: %i[new create show]
+  resources :scraps, only: %i[new create show index]
 end

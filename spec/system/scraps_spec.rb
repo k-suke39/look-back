@@ -7,6 +7,7 @@ describe 'Scrap', type: :system do
     driven_by :rack_test
     @user = create(:user)
     @scrap = create(:scrap, user_id: @user.id)
+    @scrap2 = create(:scrap, title: 'テストタイトル2', content: 'テスト本文2', user_id: @user.id)
   end
 
   let(:title) { 'テストタイトル' }
@@ -36,7 +37,7 @@ describe 'Scrap', type: :system do
       context '正常系' do
         it 'Scrapを作成できる' do
           expect { subject }.to change { Scrap.count }.by(1)
-          expect(current_path).to eq('/')
+          expect(current_path).to eq('/scraps')
           expect(page).to have_content('記録しました')
         end
       end
@@ -58,11 +59,32 @@ describe 'Scrap', type: :system do
   end
 
   describe 'スクラップ詳細機能の検証' do
-    before { visit "scraps/#{@scrap.id}"}
+    before { visit "scraps/#{@scrap.id}" }
     it '詳細データが表示される' do
-      expect(page).to have_content("テストタイトル")
-      expect(page).to have_content("テスト本文")
+      expect(page).to have_content('テストタイトル')
+      expect(page).to have_content('テスト本文')
       expect(page).to have_content(@user.nickname)
+    end
+  end
+
+  describe 'スクラップ一覧機能の検証' do
+    before { visit '/scraps' }
+
+    it '1件目のScrapが表示される' do
+      expect(page).to have_content('テストタイトル')
+      expect(page).to have_content('テスト本文')
+      expect(page).to have_content(@user.nickname)
+    end
+
+    it '2件目のScrapが表示される' do
+      expect(page).to have_content('テストタイトル2')
+      expect(page).to have_content('テスト本文2')
+      expect(page).to have_content(@user.nickname)
+    end
+
+    it 'タイトルをクリックすると詳細ページへ遷移する' do
+      click_link 'テストタイトル'
+      expect(current_path).to eq("/scraps/#{@scrap.id}")
     end
   end
 end
