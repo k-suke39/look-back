@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class ScrapsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:show]
+  def show
+    @scrap = Scrap.find_by(id: params[:id])
+  end
+
   def new
     @scrap = Scrap.new
   end

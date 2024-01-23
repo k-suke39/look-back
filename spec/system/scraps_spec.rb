@@ -6,6 +6,7 @@ describe 'Scrap', type: :system do
   before do
     driven_by :rack_test
     @user = create(:user)
+    @scrap = create(:scrap, user_id: @user.id)
   end
 
   let(:title) { 'テストタイトル' }
@@ -53,6 +54,15 @@ describe 'Scrap', type: :system do
           end
         end
       end
+    end
+  end
+
+  describe 'スクラップ詳細機能の検証' do
+    before { visit "scraps/#{@scrap.id}"}
+    it '詳細データが表示される' do
+      expect(page).to have_content("テストタイトル")
+      expect(page).to have_content("テスト本文")
+      expect(page).to have_content(@user.nickname)
     end
   end
 end
