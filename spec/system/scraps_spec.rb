@@ -171,4 +171,29 @@ describe 'Scrap', type: :system do
       end
     end
   end
+
+  describe 'スクラップ削除機能の検証' do
+    before { visit "/scraps/#{@scrap.id}" }
+    context 'ログインしていない場合' do
+      it '削除ボタンが表示されない' do
+        expect(page).not_to have_content('削除する')
+      end
+    end
+    context 'ログイン済みの場合' do
+      before do
+        sign_in @user
+        visit "/scraps/#{@scrap.id}"
+      end
+      it '削除ボタンが表示される' do
+        expect(page).to have_content('削除する')
+      end
+
+      it '削除ボタンが正常に動作する' do
+        expect do
+          click_button '削除する'
+          expect(page).to have_content('記録が削除されました')
+        end.to change { Scrap.count }.by(-1)
+      end
+    end
+  end
 end
