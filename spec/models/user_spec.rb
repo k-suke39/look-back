@@ -35,6 +35,7 @@ describe User do
           let(:nickname) { 'a' * 21 }
           it 'Userオブジェクトは無効である' do
             expect(user.valid?).to be(false)
+            expect(user.errors[:nickname]).to include('は20文字以下に設定して下さい。')
           end
         end
 
@@ -42,6 +43,7 @@ describe User do
           let(:nickname) { ' ' }
           it 'Userオブジェクトは無効である' do
             expect(user.valid?).to be(false)
+            expect(user.errors[:nickname]).to include("が入力されていません。")
           end
         end
       end
