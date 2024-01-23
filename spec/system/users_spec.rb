@@ -34,7 +34,7 @@ describe 'Users', type: :system do
         let(:nickname) { '' }
         it 'Userが作成されず、エラーメッセージが表示される' do
           expect { subject }.to change(User, :count).by(0)
-          expect(page).to have_content('ニックネーム が入力されていません。') 
+          expect(page).to have_content('ニックネーム が入力されていません。')
         end
       end
       context 'nicknameが21文字以上の場合' do
