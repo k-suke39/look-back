@@ -10,12 +10,12 @@ describe Scrap, type: :model do
   let(:user_id) { @user.id }
 
   describe 'バリデーション' do
-    let(:scrap) { build(:scrap, title: title, content: content, user_id: user_id) }
+    let(:scrap) { build(:scrap, title:, content:, user_id:) }
 
     context '正常系' do
       it 'データが有効である' do
         expect(scrap.valid?).to be(true)
-      end     
+      end
     end
     context '異常系' do
       context 'titleが空の場合' do
@@ -55,14 +55,14 @@ describe Scrap, type: :model do
   end
 
   describe 'データの検証' do
-    before { create(:scrap, title: title, content: content, user_id: user_id) }
+    before { create(:scrap, title:, content:, user_id:) }
 
     subject { described_class.first }
 
     it 'scrapの属性値を返す' do
-      expect( subject.title ).to eq('テストタイトル')
-      expect( subject.content ).to eq('テスト本文')
-      expect( subject.user_id ).to eq(@user.id)
+      expect(subject.title).to eq('テストタイトル')
+      expect(subject.content).to eq('テスト本文')
+      expect(subject.user_id).to eq(@user.id)
     end
   end
 end
