@@ -23,7 +23,23 @@ class ScrapsController < ApplicationController
       redirect_to scraps_path
     else
       flash[:alert] = '記録に失敗しました'
-      render :new
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  def edit
+    @scrap = Scrap.find_by(id: params[:id])
+  end
+
+  def update
+    @scrap = Scrap.find_by(id: params[:id])
+
+    if @scrap.update(scrap_params)
+      flash[:notice] = '記録を更新しました'
+      redirect_to scraps_path
+    else
+      flash[:alert] = '記録の更新に失敗しました'
+      render :edit, status: :unprocessable_entity
     end
   end
 

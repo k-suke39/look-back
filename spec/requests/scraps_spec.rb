@@ -64,4 +64,20 @@ describe 'Scraps', type: :request do
       end
     end
   end
+
+  describe 'GET /scraps/id/edit' do
+    context 'ログインしていない場合' do
+      it 'HTTPステータス302を返す' do
+        get "/scraps/#{@scrap.id}/edit"
+        expect(response).to have_http_status(302)
+      end
+    end
+    context 'ログイン済みの場合' do
+      before { sign_in @user }
+      it 'HTTPステータス200を返す' do
+        get "/scraps/#{@scrap.id}/edit"
+        expect(response).to have_http_status(200)
+      end
+    end
+  end
 end
