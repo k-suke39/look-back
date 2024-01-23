@@ -2,14 +2,12 @@
 
 class ScrapsController < ApplicationController
   before_action :authenticate_user!, except: %i[show index]
-
+  before_action :set_scrap, only: %i[show edit update]
   def index
     @scraps = Scrap.limit(10).order(created_at: :desc)
   end
 
-  def show
-    @scrap = Scrap.find_by(id: params[:id])
-  end
+  def show; end
 
   def new
     @scrap = Scrap.new
@@ -27,13 +25,9 @@ class ScrapsController < ApplicationController
     end
   end
 
-  def edit
-    @scrap = Scrap.find_by(id: params[:id])
-  end
+  def edit; end
 
   def update
-    @scrap = Scrap.find_by(id: params[:id])
-
     if @scrap.update(scrap_params)
       flash[:notice] = '記録を更新しました'
       redirect_to scraps_path
@@ -44,6 +38,10 @@ class ScrapsController < ApplicationController
   end
 
   private
+
+  def set_scrap
+    @scrap = Scrap.find_by(id: params[:id])
+  end
 
   def scrap_params
     params.require(:scrap).permit(:title, :content)
