@@ -8,8 +8,13 @@ RSpec.describe 'Homes', type: :system do
   end
 
   describe 'ヘッダーの検証' do
+ 
     context 'ログインしていない場合' do
       before { visit '/' }
+
+      it 'LookBackのタイトルが表示される' do
+        expect(page).to have_link('LookBack', href: '/')
+      end
 
       it 'ユーザ登録のリンクを表示する' do
         expect(page).to have_link('ユーザー登録', href: '/users/sign_up')
@@ -28,6 +33,11 @@ RSpec.describe 'Homes', type: :system do
         sign_in user
         visit '/'
       end
+
+      it 'LookBackのタイトルが表示される' do
+        expect(page).to have_link('LookBack', href: '/')
+      end
+
       it 'ログアウトのリンクを表示する' do
         expect(page).to have_content('ログアウト')
       end
