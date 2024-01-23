@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe 'Scraps', type: :request do
-  before { @user = create(:user) } 
+  before { @user = create(:user) }
   describe 'GET /scraps/new' do
     context 'ログインしていない場合' do
       it 'HTTPステータス302を返す' do
