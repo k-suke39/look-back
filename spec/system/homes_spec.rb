@@ -8,7 +8,6 @@ RSpec.describe 'Homes', type: :system do
   end
 
   describe 'ヘッダーの検証' do
- 
     context 'ログインしていない場合' do
       before { visit '/' }
 
