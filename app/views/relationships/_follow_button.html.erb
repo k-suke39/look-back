@@ -1,0 +1,7 @@
+<% if user_signed_in? %>
+  <% if current_user.follow?(scrap.user)%>
+    <%= render 'relationships/unfollow', { scrap: scrap } %>
+  <% else %>
+    <%= render 'relationships/follow', { scrap: scrap } %>
+  <% end %>
+<% end %>
