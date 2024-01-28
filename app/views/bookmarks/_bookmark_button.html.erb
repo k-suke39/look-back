@@ -1,0 +1,7 @@
+<div>
+  <%  if  current_user.bookmark?(scrap)%>
+    <%= render 'bookmarks/unbookmark', { scrap: scrap }%> 
+  <% else %>
+    <%= render 'bookmarks/bookmark', { scrap: scrap }%> 
+  <% end%>
+</div>
