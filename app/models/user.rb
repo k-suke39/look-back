@@ -12,18 +12,18 @@ class User < ApplicationRecord
   validates :nickname, presence: true, length: { maximum: 20 }
 
   def owns?(resource)
-    self.id == resource.user_id
+    id == resource.user_id
   end
 
   def bookmark?(resource)
-    self.bookmark_scraps.include?(resource)
+    bookmark_scraps.include?(resource)
   end
 
   def bookmark(resource)
-    self.bookmark_scraps << resource
+    bookmark_scraps << resource
   end
 
   def unbookmark(resource)
-    self.bookmark_scraps.destroy(resource)
+    bookmark_scraps.destroy(resource)
   end
 end

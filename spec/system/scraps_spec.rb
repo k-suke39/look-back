@@ -68,7 +68,10 @@ describe 'Scrap', type: :system do
   end
 
   describe 'スクラップ一覧機能の検証' do
-    before { visit '/scraps' }
+    before do
+      sign_in(@user)
+      visit '/scraps'
+    end
 
     context '正常系' do
       it '1件目のScrapが表示される' do
