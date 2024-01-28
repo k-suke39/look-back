@@ -9,4 +9,6 @@ Rails.application.routes.draw do
   resources :scraps do
     resources :comments, only: %i[create destroy], shallow: true
   end
+
+  resources :bookmarks, only: %i[create destroy]
 end
