@@ -2,12 +2,15 @@
 
 class ScrapsController < ApplicationController
   before_action :authenticate_user!, except: %i[show index]
-  before_action :set_scrap, only: %i[show edit update]
+  before_action :set_scrap, only: %i[show edit update destroy]
   def index
     @scraps = Scrap.limit(10).order(created_at: :desc)
   end
 
-  def show; end
+  def show
+    @comments = @scrap.comments.includes(:user).order(created_at: :desc)
+    @comment = Comment.new
+  end
 
   def new
     @scrap = Scrap.new
@@ -38,9 +41,8 @@ class ScrapsController < ApplicationController
   end
 
   def destroy
-    scrap = Scrap.find_by(id: params[:id])
-    if (scrap.user = current_user)
-      scrap.destroy
+    if (@scrap.user = current_user)
+      @scrap.destroy
       flash[:notice] = '記録が削除されました'
     end
     redirect_to scraps_path

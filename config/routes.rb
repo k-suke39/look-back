@@ -6,5 +6,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root 'home#top'
-  resources :scraps
+  resources :scraps do
+    resources :comments, only: %i[create destroy], shallow: true
+  end
 end
