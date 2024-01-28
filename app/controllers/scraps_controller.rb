@@ -3,8 +3,9 @@
 class ScrapsController < ApplicationController
   before_action :authenticate_user!, except: %i[show index]
   before_action :set_scrap, only: %i[show edit update destroy]
+
   def index
-    @scraps = Scrap.limit(10).order(created_at: :desc)
+    @scraps = Scrap.includes(:tags).order(created_at: :desc)
   end
 
   def show
@@ -17,9 +18,8 @@ class ScrapsController < ApplicationController
   end
 
   def create
-    @scrap = Scrap.new(scrap_params)
-    @scrap.user_id = current_user.id
-    if @scrap.save
+    @scrap = current_user.scraps.new(scrap_params)
+    if @scrap.save_with_tags(tag_names: params.dig(:scrap, :tag_names).split(',').uniq)
       flash[:notice] = '記録しました'
       redirect_to scraps_path
     else
@@ -31,7 +31,8 @@ class ScrapsController < ApplicationController
   def edit; end
 
   def update
-    if @scrap.update(scrap_params)
+    @scrap.assign_attributes(scrap_params)
+    if @scrap.save_with_tags(tag_names: params.dig(:scrap, :tag_names).split(',').uniq)
       flash[:notice] = '記録を更新しました'
       redirect_to scraps_path
     else
@@ -51,7 +52,7 @@ class ScrapsController < ApplicationController
   private
 
   def set_scrap
-    @scrap = Scrap.find_by(id: params[:id])
+    @scrap = current_user.scraps.find_by(id: params[:id])
   end
 
   def scrap_params
