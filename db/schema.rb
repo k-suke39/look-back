@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_240_128_023_040) do
+ActiveRecord::Schema[7.0].define(version: 20_240_128_053_200) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -34,6 +34,14 @@ ActiveRecord::Schema[7.0].define(version: 20_240_128_023_040) do
     t.datetime 'updated_at', null: false
     t.index ['scrap_id'], name: 'index_comments_on_scrap_id'
     t.index ['user_id'], name: 'index_comments_on_user_id'
+  end
+
+  create_table 'relationships', force: :cascade do |t|
+    t.integer 'following_id'
+    t.integer 'follower_id'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index %w[following_id follower_id], name: 'index_relationships_on_following_id_and_follower_id', unique: true
   end
 
   create_table 'scraps', force: :cascade do |t|

@@ -23,7 +23,12 @@
             </button>
           <% end %>
         </div>
-        <%= render 'bookmarks/bookmark_button', scrap: scrap %>
+        <div class="flex">
+          <%= render 'bookmarks/bookmark_button', scrap: scrap %>
+          <% if current_user != scrap.user %>
+            <%= render 'relationships/follow_button', scrap: scrap %>
+          <% end %>
+        </div>
       </div>
         </div>
       </div>
