@@ -5,7 +5,7 @@ require 'rails_helper'
 describe Comment, type: :model do
   describe 'バリデーション' do
     let(:content) { 'テストコメント' }
-    let(:comment) { build(:comment, content: content) }
+    let(:comment) { build(:comment, content:) }
 
     context '正常系' do
       it 'データが有効である' do

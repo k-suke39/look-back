@@ -10,6 +10,7 @@ Metrics/PerceivedComplexity:
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
+    - 'db/schema.rb'
 
 Style/Documentation:
   Exclude:
